@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | DevMira Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-blue-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center px-4 py-4">
+      <h1 class="text-xl font-bold text-emerald-400">DevMira</h1>
+      <nav class="hidden md:flex space-x-6 items-center">
+        <a href="index.html" class="flex items-center gap-1 hover:text-emerald-400"><i data-feather="home"></i><span>Home</span></a>
+        <a href="product.html" class="flex items-center gap-1 hover:text-emerald-400"><i data-feather="box"></i><span>Products</span></a>
+        <a href="cart.html" class="flex items-center gap-1 hover:text-emerald-400"><i data-feather="shopping-cart"></i><span>Cart</span></a>
+        <a href="about.html" class="flex items-center gap-1 text-emerald-400"><i data-feather="info"></i><span>About</span></a>
+      </nav>
+      <button id="menu-toggle" class="md:hidden text-2xl">&#9776;</button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 bg-blue-800">
+      <a href="index.html" class="block py-2 hover:text-emerald-400">Home</a>
+      <a href="product.html" class="block py-2 hover:text-emerald-400">Products</a>
+      <a href="cart.html" class="block py-2 hover:text-emerald-400">Cart</a>
+      <a href="about.html" class="block py-2 text-emerald-400">About</a>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <main class="container mx-auto px-4 py-12">
+    <section class="text-center mb-16">
+      <h2 class="text-4xl font-extrabold text-indigo-800 mb-4">About DevMira</h2>
+      <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+        Welcome to <span class="text-emerald-600 font-semibold">DevMira</span>, your go-to destination for stylish, high-quality lifestyle and tech products. We believe in simplicity, comfort, and modern design that brings ease to your everyday life.
+      </p>
+    </section>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Mission -->
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <i data-feather="target" class="w-10 h-10 text-indigo-600 mb-4"></i>
+        <h3 class="text-xl font-bold mb-2">Our Mission</h3>
+        <p class="text-gray-600">To deliver stylish, reliable, and affordable products while offering an exceptional shopping experience for everyone.</p>
+      </div>
+
+      <!-- Values -->
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <i data-feather="heart" class="w-10 h-10 text-indigo-600 mb-4"></i>
+        <h3 class="text-xl font-bold mb-2">Our Values</h3>
+        <p class="text-gray-600">Honesty, customer satisfaction, and continuous innovation are at the heart of everything we do.</p>
+      </div>
+
+      <!-- Vision -->
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <i data-feather="eye" class="w-10 h-10 text-indigo-600 mb-4"></i>
+        <h3 class="text-xl font-bold mb-2">Our Vision</h3>
+        <p class="text-gray-600">To become the go-to online store for affordable luxury, trusted by customers across the world.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-indigo-900 text-white text-center py-4 mt-12">
+    <p>&copy; 2025 DevMira Shop. All rights reserved.</p>
+  </footer>
+
+  <script>
+    feather.replace();
+
+    // Mobile menu toggle
+    const toggleBtn = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    toggleBtn?.addEventListener("click", () => {
+      mobileMenu?.classList.toggle("hidden");
+    });
+  </script>
+</body>
+</html>

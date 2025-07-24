@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart | DevMira Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-blue-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center px-4 py-4">
+      <h1 class="text-xl font-bold text-emerald-400">DevMira</h1>
+      <nav class="hidden md:flex space-x-6 items-center">
+        <a href="index.html" class="flex items-center gap-1 hover:text-emerald-400"><i data-feather="home"></i><span>Home</span></a>
+        <a href="product.html" class="flex items-center gap-1 hover:text-emerald-400"><i data-feather="box"></i><span>Products</span></a>
+        <a href="cart.html" class="flex items-center gap-1 hover:text-emerald-400"><i data-feather="shopping-cart"></i><span>Cart</span></a>
+      </nav>
+      <button id="menu-toggle" class="md:hidden text-2xl">&#9776;</button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 bg-blue-800">
+      <a href="index.html" class="block py-2 hover:text-emerald-400">Home</a>
+      <a href="product.html" class="block py-2 hover:text-emerald-400">Products</a>
+      <a href="cart.html" class="block py-2 hover:text-emerald-400">Cart</a>
+    </div>
+  </header>
+
+  <!-- Main Cart Section -->
+  <main class="container mx-auto px-4 py-10">
+    <h2 class="text-3xl font-bold mb-6 text-indigo-800">Shopping Cart</h2>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Cart Items -->
+      <div id="cart-items" class="flex-1 space-y-6"></div>
+
+      <!-- Order Summary -->
+      <div class="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-2xl font-semibold mb-4 text-indigo-800">Order Summary</h3>
+        <div class="flex justify-between mb-2">
+          <span>Subtotal</span>
+          <span id="subtotal" class="font-semibold">$0.00</span>
+        </div>
+        <div class="flex justify-between mb-2">
+          <span>Shipping</span>
+          <span class="font-semibold">$10.00</span>
+        </div>
+        <hr class="my-3" />
+        <div class="flex justify-between text-lg font-bold">
+          <span>Total</span>
+          <span id="total" class="text-emerald-600">$0.00</span>
+        </div>
+
+        <div class="mt-6 text-right">
+  <a href="checkout.html" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition">
+    Proceed to Checkout
+  </a>
+</div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-indigo-900 text-white text-center py-4 mt-12">
+    <p>&copy; 2025 DevMira Shop. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    feather.replace();
+
+    // Mobile menu toggle
+    const toggleBtn = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    toggleBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    function renderCartItems() {
+      const cartContainer = document.getElementById("cart-items");
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cartContainer.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `<p class="text-gray-600">Your cart is empty.</p>`;
+        document.getElementById("subtotal").textContent = "$0.00";
+        document.getElementById("total").textContent = "$10.00";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart-item flex flex-col md:flex-row gap-4 bg-white p-4 rounded-lg shadow-md";
+        div.dataset.price = item.price;
+
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" class="w-full md:w-32 h-32 object-cover rounded-md">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-indigo-800">${item.name}</h3>
+            <p class="text-gray-600">Item ID: ${item.id}</p>
+            <p class="text-emerald-600 font-semibold mt-1">$${item.price}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="qty-${index}">Qty</label>
+            <input id="qty-${index}" type="number" value="${item.quantity}" min="1" class="quantity w-16 px-2 py-1 border rounded-md">
+            <button class="remove-btn text-red-600 hover:text-red-800" title="Remove">
+              <i data-feather="trash-2"></i>
+            </button>
+          </div>
+        `;
+
+        cartContainer.appendChild(div);
+      });
+
+      feather.replace();
+      attachEvents();
+      updateCartTotals();
+    }
+
+    function updateCartTotals() {
+      const items = document.querySelectorAll(".cart-item");
+      let subtotal = 0;
+
+      items.forEach(item => {
+        const price = parseFloat(item.dataset.price);
+        const qty = parseInt(item.querySelector(".quantity").value);
+        subtotal += price * qty;
+      });
+
+      const shipping = 10.00;
+      const total = subtotal + shipping;
+
+      document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById("total").textContent = `$${total.toFixed(2)}`;
+    }
+
+    function attachEvents() {
+      document.querySelectorAll(".remove-btn").forEach((button, i) => {
+        button.addEventListener("click", () => {
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          cart.splice(i, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCartItems();
+        });
+      });
+
+      document.querySelectorAll(".quantity").forEach((input, i) => {
+        input.addEventListener("input", (e) => {
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          cart[i].quantity = parseInt(e.target.value);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateCartTotals();
+        });
+      });
+    }
+
+    // Initialize
+    renderCartItems();
+  </script>
+</body>
+</html>

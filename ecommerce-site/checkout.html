@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout | DevMira Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold text-emerald-400">DevMira</h1>
+      <nav class="hidden md:flex gap-6 items-center">
+        <a href="index.html" class="hover:text-emerald-400">Home</a>
+        <a href="product.html" class="hover:text-emerald-400">Products</a>
+        <a href="cart.html" class="hover:text-emerald-400">Cart</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Checkout Content -->
+  <main class="container mx-auto px-4 py-10">
+    <h2 class="text-3xl font-bold mb-8 text-indigo-800">Checkout</h2>
+
+    <div class="bg-white p-6 rounded-lg shadow-md max-w-xl mx-auto">
+      <h3 class="text-xl font-semibold mb-4">Select Payment Method</h3>
+
+      <form id="checkout-form" class="space-y-6">
+        <div class="space-y-2">
+          <label class="flex items-center gap-2">
+            <input type="radio" name="payment" value="stripe" class="accent-indigo-600">
+            <span>Stripe (Credit/Debit Card)</span>
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="radio" name="payment" value="mobile" class="accent-indigo-600">
+            <span>Mobile Money</span>
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="radio" name="payment" value="cod" class="accent-indigo-600">
+            <span>Cash on Delivery</span>
+          </label>
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-md hover:bg-emerald-700 transition duration-300">
+          Pay Now
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-indigo-900 text-white text-center py-4 mt-12">
+    <p>&copy; 2025 DevMira Shop. All rights reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const form = document.getElementById("checkout-form");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="payment"]:checked');
+
+      if (!selected) {
+        alert("Please select a payment method first.");
+        return;
+      }
+
+      // Redirect to success.html
+      window.location.href = "success.html";
+    });
+  </script>
+</body>
+</html>

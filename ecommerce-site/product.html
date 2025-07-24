@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products | DevMira Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class= "bg-green-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-900 text-white shadow-md">
+    <div class="container mx-auto flex flex-wrap justify-between items-center px-4 py-4">
+      <h1 class="text-xl font-bold text-emerald-400">DevMira</h1>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:text-emerald-400">Home</a>
+        <a href="product.html" class="hover:text-emerald-400">Products</a>
+        <a href="cart.html" class="hover:text-emerald-400">Cart</a>
+      </nav>
+      <button id="menu-toggle" class="md:hidden text-2xl">&#9776;</button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 bg-blue-800">
+      <a href="index.html" class="block py-2 hover:text-emerald-400">Home</a>
+      <a href="product.html" class="block py-2 hover:text-emerald-400">Products</a>
+      <a href="cart.html" class="block py-2 hover:text-emerald-400">Cart</a>
+    </div>
+  </header>
+
+  <!-- Product Grid Section -->
+  <main class="container mx-auto px-4 py-8">
+    <h2 class="text-3xl font-semibold text-center mb-6 text-indigo-800">Our Featured Products</h2>
+
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <!-- Product Card -->
+      <div class="product bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-4">
+        <a href="product-details-1.html">
+        <img src="../images/product-1.jpeg" alt="Stylish Sneakers" class="w-full h-48 object-cover rounded-md mb-4">
+        <h3 class="product-name text-lg font-semibold">Stylish Sneakers</h3>
+        <p class="text-gray-600 text-sm mb-2">Comfortable and trendy footwear for everyday use.</p>
+        <p class="product-price text-emerald-600 font-bold text-lg mb-2">59.99$</p>
+        </a>
+        <button class="add-to-cart w-full bg-emerald-500 text-white py-2 rounded-md hover:bg-emerald-600">Add to Cart</button>
+      </div>
+
+      <div class="product bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-4">
+        <a href="product-details-2.html">
+        <img src="../images/product-2.jpeg" alt="Elegant Watch" class="w-full h-48 object-cover rounded-md mb-4">
+        <h3 class="product-name text-lg font-semibold">Elegant Watch</h3>
+        <p class="text-gray-600 text-sm mb-2">Timeless design with premium build quality.</p>
+        <p class="product-price text-emerald-600 font-bold text-lg mb-2">89.00$</p>
+        </a>
+        <button class="add-to-cart w-full bg-emerald-500 text-white py-2 rounded-md hover:bg-emerald-600">Add to Cart</button>
+      </div>
+
+      <div class="product bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-4">
+        <a href="product-details-3.html">
+        <img src="../images/product-3.jpeg" alt="Leather Backpack" class="w-full h-48 object-cover rounded-md mb-4">
+        <h3 class="product-name text-lg font-semibold">Leather Backpack</h3>
+        <p class="text-gray-600 text-sm mb-2">Spacious and stylish, perfect for daily commutes.</p>
+        <p class="product-price text-emerald-600 font-bold text-lg mb-2">120.00$</p>
+        </a>
+        <button class="add-to-cart w-full bg-emerald-500 text-white py-2 rounded-md hover:bg-emerald-600">Add to Cart</button>
+      </div>
+
+      <div class="product bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-4">
+        <a href="product-details-4.html">
+        <img src="../images/product-4.jpeg" alt="Wireless Headphones" class="w-full h-48 object-cover rounded-md mb-4">
+        <h3 class="product-name text-lg font-semibold">Wireless Headphones</h3>
+        <p class="text-gray-600 text-sm mb-2">High-quality sound with noise cancellation.</p>
+        <p class="product-price text-emerald-600 font-bold text-lg mb-2">79.99$</p>
+        </a>
+        <button class="add-to-cart w-full bg-emerald-500 text-white py-2 rounded-md hover:bg-emerald-600">Add to Cart</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-indigo-900 text-white text-center py-4 mt-12">
+    <p>&copy; 2025 DevMira Shop. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const toggleBtn = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    toggleBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    // Add to cart logic
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+      button.addEventListener("click", (e) => {
+        const productCard = e.target.closest(".product");
+        const name = productCard.querySelector(".product-name").textContent;
+        const price = parseFloat(productCard.querySelector(".product-price").textContent);
+        const image = productCard.querySelector("img").getAttribute("src");
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // Check if product already exists
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          cart.push({ name, price, image, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert(`${name} added to cart!`);
+      });
+    });
+  </script>
+</body>
+</html>
